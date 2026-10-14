@@ -1,0 +1,26 @@
+[
+  {
+    "module": "public_core",
+    "source_sha256": "42023109e4ec2670ee74dbb03d7fc0d77484865fe48a52e6388cc7e5848da8b7"
+  },
+  {
+    "module": "legacy_training",
+    "source_sha256": "cecd69684a0c138340af11a99c217b60fae9ae1a131eb98a39b0bb80f0486da7"
+  },
+  {
+    "module": "encoder",
+    "source_sha256": "647becf1f60325946f459aeb3059bfeca7b04c6ac5486964dc52cae699fc864a"
+  },
+  {
+    "module": "paderborn_builder",
+    "source_sha256": "97fedb4eb2125ccaf70a35f822f809efe278dc3b0669dd0fbba3363b9512e344"
+  },
+  {
+    "module": "hust_builder",
+    "source_sha256": "c8c82bd4d534e5498bfde72d40e8f5121d2a72a806b6e12f6813131839637ea9"
+  },
+  {
+    "module": "seu_builder",
+    "source_sha256": "ca145513a0fd4ccd78b1219e6ec8ece75c3c708e6b080a63eb5dcda8b873504a"
+  }
+]

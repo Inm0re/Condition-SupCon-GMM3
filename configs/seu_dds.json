@@ -1,0 +1,20 @@
+{
+  "dataset": "seu_dds",
+  "channels": 7,
+  "conditions": 2,
+  "steps": 200,
+  "seeds": [
+    35001,
+    35002,
+    35003,
+    35004,
+    35005
+  ],
+  "temperature": 0.1,
+  "components": 3,
+  "normal_quantile": 0.95,
+  "anchors_per_condition": 4,
+  "training_backend": "grouped",
+  "window_length": 2048,
+  "window_stride": 2048
+}

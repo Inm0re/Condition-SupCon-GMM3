@@ -1,0 +1,1 @@
+The PatchEncoder and RevIN implementations are adapted from PaAno (copyright jinnnju), under the included MIT license. Encoder use_revin=False reproduces the study configuration. The model import path is the only packaging change to the encoder.

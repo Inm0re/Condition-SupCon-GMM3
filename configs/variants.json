@@ -1,0 +1,56 @@
+[
+  {
+    "variant": "A0_base_globalKNN",
+    "encoder": "base_paano",
+    "family": "knn",
+    "routing": "global"
+  },
+  {
+    "variant": "A1_conditionSupCon_globalKNN",
+    "encoder": "supcon_condition",
+    "family": "knn",
+    "routing": "global"
+  },
+  {
+    "variant": "N1_base_conditionKNN",
+    "encoder": "base_paano",
+    "family": "knn",
+    "routing": "condition"
+  },
+  {
+    "variant": "N2_conditionSupCon_conditionKNN",
+    "encoder": "supcon_condition",
+    "family": "knn",
+    "routing": "condition"
+  },
+  {
+    "variant": "N3_base_globalGMM3",
+    "encoder": "base_paano",
+    "family": "gmm",
+    "routing": "global"
+  },
+  {
+    "variant": "N4_conditionSupCon_globalGMM3",
+    "encoder": "supcon_condition",
+    "family": "gmm",
+    "routing": "global"
+  },
+  {
+    "variant": "A2_base_conditionGMM3",
+    "encoder": "base_paano",
+    "family": "gmm",
+    "routing": "condition"
+  },
+  {
+    "variant": "H_conditionSupCon_conditionGMM3",
+    "encoder": "supcon_condition",
+    "family": "gmm",
+    "routing": "condition"
+  },
+  {
+    "variant": "A4_globalInstance_conditionGMM3",
+    "encoder": "supcon_global_instance",
+    "family": "gmm",
+    "routing": "condition"
+  }
+]
