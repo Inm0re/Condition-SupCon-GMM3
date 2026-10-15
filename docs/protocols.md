@@ -24,9 +24,18 @@ partitions; source files are not automatically physical bearing identities.
 XJTU: Bearing1-1 and Bearing2-2, 16 non-overlapping windows per minute record.
 Normal prefixes use chronological 60/20/20 splitting. The operational labelled
 fault boundaries are records 79 and 47. These are not independently measured
-physical degradation onsets. The archived lifecycle policy compares the q90
-record score against the normal window-calibration q95; it must not be silently
-replaced by a record-calibration q95 when reproducing that policy.
+physical degradation onsets. The archived V48 runner calls the V31 evaluator:
+q90 aggregation of 16 raw window scores is performed on BOTH normal calibration
+records and test records. Each bearing's median and IQR are estimated from its
+normal calibration-record q90 scores, with IQR floored at 1e-8. The q95 of these
+calibrated normal record scores fixes that bearing's threshold. Test records
+use the same frozen median, IQR and threshold. This is the policy underlying the
+reported five-seed lifecycle results; it does not use fault labels to calibrate.
+
+Release v1.0.0 incorrectly applied a calibration-window q95 to test-record q90
+scores, omitted median–IQR scaling and described that as archived behavior.
+That packaging error is corrected in v1.0.1; the original experiment and paper
+results are not replaced. The old tag is retained for an auditable history.
 
 K=3 is an empirical shared configuration, not selected by a normal-only criterion.
 Five algorithmic seeds are not five physical replications. The auxiliary random

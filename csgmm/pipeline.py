@@ -11,6 +11,7 @@ VARIANTS=json.loads((Path(__file__).parents[1]/'configs/variants.json').read_tex
 PUBLIC_DATASETS=('hust','paderborn_real','seu_dds')
 
 def configure(config,device=None):
+    core.EMBED_CHUNK=int(config.get('embedding_chunk',512))
     for mod in (core,legacy_training):
         mod.ITERS=int(config['steps']);mod.TEMPERATURE=float(config['temperature'])
         mod.GMM_COMPONENTS=int(config['components']);mod.Q_THRESHOLD=float(config['normal_quantile'])
@@ -109,7 +110,7 @@ def fit(folder,output,config,seed,variant='H',device=None):
     core.dump(dict(dataset=dataset,variant=variant,seed=seed,fit_windows=len(c),calibration_windows=len(cv),threshold=threshold,test_data_opened=False),output/'fit_protocol.json')
     return output
 
-def predict(x,conditions,artifact,device=None):
+def predict_raw(x,conditions,artifact,device=None):
     artifact=Path(artifact);bundle=joblib.load(artifact/'normal_reference.joblib')
     configure(bundle['config'],device);c=np.asarray(conditions,np.int64)
     ensure_supported(c,[int(k) for k in bundle['scales']] if bundle['spec']['routing']=='condition' else bundle['scales']['global']['conditions'])
@@ -117,6 +118,15 @@ def predict(x,conditions,artifact,device=None):
     model.load_state_dict(torch.load(artifact/'model.pt',map_location=core.DEVICE,weights_only=True))
     z=core.embed(model,x,c,np.arange(len(x)),bundle['mean'],bundle['std'])
     raw=raw_score(z,c,bundle['banks'],bundle['spec']['family'],bundle['spec']['routing'])
+    return raw,bundle
+
+def predict(x,conditions,artifact,device=None):
+    # A lifecycle threshold is defined on record statistics, not single windows.
+    bundle=joblib.load(Path(artifact)/'normal_reference.joblib')
+    if bundle.get('config',{}).get('dataset')=='xjtu_sy':
+        raise ValueError('XJTU-SY requires complete records; use python -m csgmm.lifecycle_infer with --records')
+    raw,bundle=predict_raw(x,conditions,artifact,device)
+    c=np.asarray(conditions,np.int64)
     score=align(raw,c,bundle['scales'],bundle['spec']['routing'])
     threshold=np.asarray([bundle['threshold'][str(int(k))] for k in c]) if isinstance(bundle['threshold'],dict) else bundle['threshold']
     return score,(score>=threshold).astype(np.int8),threshold

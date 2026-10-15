@@ -1,5 +1,6 @@
 {
   "dataset": "xjtu_sy",
+  "embedding_chunk": 256,
   "channels": 2,
   "conditions": 2,
   "steps": 200,

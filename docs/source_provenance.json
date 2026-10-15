@@ -22,5 +22,13 @@
   {
     "module": "seu_builder",
     "source_sha256": "ca145513a0fd4ccd78b1219e6ec8ece75c3c708e6b080a63eb5dcda8b873504a"
+  },
+  {
+    "module": "lifecycle_record_evaluation",
+    "source_sha256": "1ba34819239b95c5f21c4540045d5bcb56aeea453c1c548fcfdc5446a0981ed4"
+  },
+  {
+    "module": "lifecycle_experiment_driver",
+    "source_sha256": "da7994d1540f3135ff37c13ba8ac9fa1890af2a90b6b1eea28c1614c2619a3b8"
   }
 ]

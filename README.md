@@ -85,8 +85,11 @@ python -m csgmm.lifecycle --data data/xjtu_sy --output outputs/xjtu_sy
 By default the five seeds are 35001–35005 and training lasts 200 steps. Existing
 run directories are not overwritten. Use `--stage train` and `--stage evaluate`
 for separate primary-cohort stages. `--seed 35001` runs one seed. The lifecycle
-entry point preserves bearing-wise window-calibration q95 and q90 record scoring;
-these statistical scales are stated explicitly in the generated protocol.
+entry point follows the archived V31/V48 evaluation: first take q90 of the 16
+raw window scores in each record, then estimate bearing-wise median–IQR scaling
+and the q95 threshold from NORMAL calibration-record scores. Test records use
+the same aggregation and frozen calibration. See [release notes](CHANGELOG.md)
+for the lifecycle correction in v1.0.1; v1.0.0 did not implement this policy.
 
 Artifacts created locally include `model.pt`, `normal_reference.joblib`,
 `training_history.csv`, scores and metrics. They are ignored by Git and are not
@@ -127,6 +130,19 @@ Inputs must use the same preprocessing and channel order as training. The CLI
 rejects unsupported condition identifiers; metadata errors that pass these
 checks remain a limitation. This packaging check is not an unseen-condition
 generalization experiment.
+
+XJTU-SY requires complete records and its separate inference entry point:
+
+```bash
+python -m csgmm.lifecycle_infer --windows data/xjtu_sy/test_x.npy \
+  --conditions data/xjtu_sy/test_condition.npy --records data/xjtu_sy/test_record.npy \
+  --artifact outputs/xjtu_sy/seed_35001/H --output outputs/xjtu_record_inference.npz
+```
+
+Every (condition, record) must contain exactly 16 windows. Calibration artifacts
+created with the incorrect v1.0.0 lifecycle runner are rejected by this entry
+point. The generic window-inference entry point rejects lifecycle artifacts to
+avoid comparing single-window scores against a record-level threshold.
 
 ## Physical-bearing uncertainty
 
